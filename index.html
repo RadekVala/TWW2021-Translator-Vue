@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+
+<body>
+    <div id="app">
+        <v-app>
+            <v-main>
+                <v-tabs v-model="tab" background-color="deep-purple accent-6" centered dark icons-and-text>
+                    <v-tabs-slider></v-tabs-slider>
+
+                    <v-tab href="#tab-1">
+                        Translator
+                        <v-icon>mdi-earth</v-icon>
+                    </v-tab>
+
+                    <v-tab href="#tab-2">
+                        History
+                        <v-icon>mdi-history</v-icon>
+                    </v-tab>
+
+                </v-tabs>
+
+                <v-tabs-items v-model="tab">
+                    <v-tab-item value="tab-1">
+                        <v-container>
+                            <v-form ref="form" v-model="valid">
+                                <v-text-field v-model="userInput" :rules="userInputRules" label="Text for translation"
+                                    required></v-text-field>
+
+                                <v-row>
+                                    <v-col class="d-flex" cols="12" sm="6">
+                                        <v-select v-model="inputLang" :items="languages" label="Input language" item-text="name" item-value="code">
+                                        </v-select>
+                                    </v-col>
+
+                                    <v-col class="d-flex" cols="12" sm="6">
+                                        <v-select v-model="outputLang" :items="languages" label="Output language" item-text="name" item-value="code">
+                                        </v-select>
+                                    </v-col>
+
+                                </v-row>
+
+                                <v-btn @click="handleClick" block elevation="2">Translate</v-btn>
+                            </v-form>
+
+                            <v-card v-if="result" elevation="5">
+                                <v-card-text class="mt-4">
+                                    {{ result }}
+                                </v-card-text>
+                            </v-card>
+                        </v-container>
+                    </v-tab-item>
+
+                    <v-tab-item value="tab-2">
+                        <v-container>
+                            <v-list-item v-for="record in history">
+                                <v-list-item-content>
+                                    <v-list-item-title>
+                                        {{ record.input }}
+                                        <v-icon>mdi-arrow-right</v-icon>
+                                        {{ record.output }}
+                                    </v-list-item-title>
+                                </v-list-item-content>
+                            </v-list-item>
+                        </v-container>
+                    </v-tab-item>
+                </v-tabs-items>
+            </v-main>
+        </v-app>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+
+</html>
